@@ -1,0 +1,6 @@
+生成私钥：openssl genrsa -out rsa_private_key.pem 1024
+根据私钥生成公钥：openssl rsa -in rsa_private_key.pem -out rsa_public_key.pem -pubout
+将私钥进行PKCS#8编码：openssl pkcs8 -topk8 -in rsa_private_key.pem -out pkcs8_rsa_private_key.pem -nocrypt
+将tos.txt进行SHA1签名：openssl sha1 -sign rsa_private_key.pem -out rsasign.bin tos.txt tos.txt
+
+tos.txt为自己需要签名的文本，字符任意
