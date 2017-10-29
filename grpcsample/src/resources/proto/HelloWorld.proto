@@ -1,6 +1,6 @@
 syntax = "proto3";
 package grpc;
-option java_package = "com.github.smartheye.grpc.server.service";
+option java_package = "com.github.smartheye.grpc.server.internal";
 option java_outer_classname = "HelloWorldServiceProto";
 option java_multiple_files = true;
 
