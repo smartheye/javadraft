@@ -18,10 +18,39 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>22.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.madgag.spongycastle</groupId>
 			<artifactId>core</artifactId>
-			<version>1.51.0.0</version>
+			<version>1.58.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.madgag.spongycastle/prov -->
+		<dependency>
+			<groupId>com.madgag.spongycastle</groupId>
+			<artifactId>prov</artifactId>
+			<version>1.58.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.madgag.spongycastle/pkix -->
+		<dependency>
+			<groupId>com.madgag.spongycastle</groupId>
+			<artifactId>pkix</artifactId>
+			<version>1.54.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+		<!-- <dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcprov-jdk15on</artifactId> 
+			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
+			<artifactId>bcprov-ext-jdk15on</artifactId> <version>1.58</version> </dependency> 
+			<dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcpkix-jdk15on</artifactId> 
+			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
+			<artifactId>bcmail-jdk15on</artifactId> <version>1.58</version> </dependency> 
+			<dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcpg-jdk15on</artifactId> 
+			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
+			<artifactId>bctls-jdk15on</artifactId> <version>1.58</version> </dependency> -->
+
 	</dependencies>
 </project>

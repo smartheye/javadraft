@@ -2,7 +2,6 @@ package com.github.smartheye.bitcoin;
 
 
 import org.bitcoinj.core.ECKey;
-import org.spongycastle.math.ec.ECPoint;
 
 public class ECKeyGenMain {
 
@@ -10,7 +9,7 @@ public class ECKeyGenMain {
 	
 	public static void main(String[] args) {
 		ECKey eckey = new ECKey();
-		ECPoint point = eckey.getPubKeyPoint();
+//		ECPoint point = eckey.getPubKeyPoint();
 	}
 
 }

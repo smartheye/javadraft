@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -11,15 +11,16 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/opt/Java/Java8/jre/lib/ext/sunjce_provider.jar"/>
-	<classpathentry kind="lib" path="C:/opt/Java/Java8/jre/lib/ext/sunec.jar"/>
-	<classpathentry kind="lib" path="C:/opt/Java/Java8/jre/lib/ext/sunmscapi.jar"/>
-	<classpathentry kind="lib" path="C:/opt/Java/Java8/jre/lib/ext/sunpkcs11.jar"/>
+	<classpathentry kind="lib" path="C:/opt/Java/J2SE8/jre/lib/ext/sunec.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/bitcoinj-core"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/opt/Java/J2SE8/jre/lib/ext/sunjce_provider.jar"/>
+	<classpathentry kind="lib" path="C:/opt/Java/J2SE8/jre/lib/ext/sunmscapi.jar"/>
+	<classpathentry kind="lib" path="C:/opt/Java/J2SE8/jre/lib/ext/sunpkcs11.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ethereumj-core"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
