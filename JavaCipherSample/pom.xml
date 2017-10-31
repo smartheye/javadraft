@@ -41,16 +41,12 @@
 			<artifactId>pkix</artifactId>
 			<version>1.54.0.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
-		<!-- <dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcprov-jdk15on</artifactId> 
-			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
-			<artifactId>bcprov-ext-jdk15on</artifactId> <version>1.58</version> </dependency> 
-			<dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcpkix-jdk15on</artifactId> 
-			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
-			<artifactId>bcmail-jdk15on</artifactId> <version>1.58</version> </dependency> 
-			<dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcpg-jdk15on</artifactId> 
-			<version>1.58</version> </dependency> <dependency> <groupId>org.bouncycastle</groupId> 
-			<artifactId>bctls-jdk15on</artifactId> <version>1.58</version> </dependency> -->
 
+		<!-- hash algorithm -->
+		  <dependency>
+    <groupId>com.lambdaworks</groupId>
+    <artifactId>scrypt</artifactId>
+    <version>1.4.0</version>
+  </dependency>
 	</dependencies>
 </project>
