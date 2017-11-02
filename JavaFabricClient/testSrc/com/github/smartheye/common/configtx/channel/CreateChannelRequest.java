@@ -28,91 +28,72 @@ public class CreateChannelRequest {
 	private String consortiumName;
 
 	private String[] orgNames;
-	
+
 	private ChannelConfiguration channelConfiguration;
-	
-	public CreateChannelRequest(String channelId, String consortium, String[] orgNames) {
+
+	public CreateChannelRequest(String channelId, String consortiumName, String[] orgNames) {
 		this.channelId = channelId;
-		this.consortiumName = consortium;
+		this.consortiumName = consortiumName;
 		this.orgNames = orgNames;
 	}
-	
+
 	public void initialize() {
 		channelConfiguration = new ChannelConfiguration();
-		Envelope channelCreateEnvelope = newChannelCreateEnvelope(channelId, consortiumName,orgNames);
+		Envelope channelCreateEnvelope = newChannelCreateEnvelope(channelId, consortiumName, orgNames);
 		channelConfiguration.setChannelConfiguration(channelCreateEnvelope.toByteArray());
 	}
-	
-	
-	public ChannelConfiguration getChannelConfiguration(){
+
+	public ChannelConfiguration getChannelConfiguration() {
 		return channelConfiguration;
 	}
-	
-	public Envelope newChannelCreateEnvelope(String channelId,String consortiumName,String[] orgNames) {
+
+	public Envelope newChannelCreateEnvelope(String channelId, String consortiumName, String[] orgNames) {
 		java.sql.Timestamp now = new java.sql.Timestamp(System.currentTimeMillis());
-		long seconds = now.getTime()/1000;
+		long seconds = now.getTime() / 1000;
 		// int nanos = now.getNanos();
 		// no sigature
 		String txId = createTxID(new byte[0], new byte[0]);
-		
-		ChannelHeader createChannelHeader = ChannelHeader.newBuilder().setType(HeaderType.CONFIG_UPDATE_VALUE)
-				.setVersion(0)
-				.setTimestamp(Timestamp.newBuilder().setSeconds(seconds).setNanos(0).build())
-				.setChannelId(channelId)
-				.setTxId(txId)
-				.setEpoch(0L).build();
 
-		SignatureHeader createChannelSignatureHeader = SignatureHeader.newBuilder().setCreator(ByteString.copyFrom(new byte[0]))
-				.setNonce(ByteString.copyFrom(new byte[0]))
-				.build();
-		
-		Header payloadHeader = Header.newBuilder()
-				.setChannelHeader(createChannelHeader.toByteString())
-				.setSignatureHeader(createChannelSignatureHeader.toByteString())
-				.build();
-		
+		ChannelHeader createChannelHeader = ChannelHeader.newBuilder().setType(HeaderType.CONFIG_UPDATE_VALUE)
+				.setVersion(0).setTimestamp(Timestamp.newBuilder().setSeconds(seconds).setNanos(0).build())
+				.setChannelId(channelId).setTxId(txId).setEpoch(0L).build();
+
+		SignatureHeader createChannelSignatureHeader = SignatureHeader.newBuilder()
+				.setCreator(ByteString.copyFrom(new byte[0])).setNonce(ByteString.copyFrom(new byte[0])).build();
+
+		Header payloadHeader = Header.newBuilder().setChannelHeader(createChannelHeader.toByteString())
+				.setSignatureHeader(createChannelSignatureHeader.toByteString()).build();
+
 		Payload payload = Payload.newBuilder().setHeader(payloadHeader)
-		.setData(newChannelCreateConfigUpdateEnvelope(channelId,orgNames).toByteString()).build();
+				.setData(newChannelCreateConfigUpdateEnvelope(channelId, consortiumName, orgNames).toByteString())
+				.build();
 		return Envelope.newBuilder().setPayload(payload.toByteString()).build();
 	}
-	
-	public ConfigUpdateEnvelope newChannelCreateConfigUpdateEnvelope(String channelId,String[] orgNames) {
-		ConfigUpdate configUpdate = ConfigUpdate.newBuilder()
-				.setChannelId(channelId)
-				.setReadSet(newDefaultReadSet(channelId,orgNames))
-				.setWriteSet(newDefaultWriteSet(channelId,orgNames)).build();
+
+	public ConfigUpdateEnvelope newChannelCreateConfigUpdateEnvelope(String channelId, String consortiumName,
+			String[] orgNames) {
+		ConfigUpdate configUpdate = ConfigUpdate.newBuilder().setChannelId(channelId)
+				.setReadSet(newDefaultReadSet(consortiumName, orgNames))
+				.setWriteSet(newDefaultWriteSet(consortiumName, orgNames)).build();
 
 		return ConfigUpdateEnvelope.newBuilder().setConfigUpdate(configUpdate.toByteString()).build();
 	}
-	
-	public ConfigGroup newDefaultWriteSet(String consortiumName,String[] orgNames){
-		
-		ConfigPolicy adminsPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Admins", ImplicitMetaPolicy.Rule.MAJORITY,"Admins");
-		ConfigPolicy writersPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Writers", ImplicitMetaPolicy.Rule.ANY,"Admins");
-		ConfigPolicy readersPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Readers", ImplicitMetaPolicy.Rule.ANY,"Admins");
-		
-		ConfigValue consortiumValue = ConfigValue.newBuilder().setValue(newConsortium(consortiumName).toByteString()).build();
-		ConfigGroup.Builder applicationConfigGroupBuild = ConfigGroup.newBuilder()
-				.setVersion(1)
-				.setModPolicy("Admins")
-				.putPolicies("Admins", adminsPolicy)
-				.putPolicies("Writers", writersPolicy)
-				.putPolicies("Readers", readersPolicy);
-		for(String orgName:orgNames) {
-			applicationConfigGroupBuild.putGroups(orgName, ConfigGroup.getDefaultInstance());
-		}
-		ConfigGroup applicationConfigGroup = applicationConfigGroupBuild.build();
-		ConfigGroup writeset = ConfigGroup.newBuilder()
-				.putGroups("Application", applicationConfigGroup)
-				.putValues("Consortium", consortiumValue).build();
-		return writeset;
-	}
-	
-	public ConfigGroup newDefaultReadSet(String consortiumName,String[] orgNames){
 
-		ConfigValue consortiumValue = ConfigValue.newBuilder().setValue(newConsortium(consortiumName).toByteString()).build();
-		ConfigGroup.Builder applicationConfigGroupBuild = ConfigGroup.newBuilder();
-		for(String orgName:orgNames) {
+	public ConfigGroup newDefaultWriteSet(String consortiumName, String[] orgNames) {
+
+		ConfigPolicy adminsPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Admins",
+				ImplicitMetaPolicy.Rule.MAJORITY, "Admins");
+		ConfigPolicy writersPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Writers", ImplicitMetaPolicy.Rule.ANY,
+				"Admins");
+		ConfigPolicy readersPolicy = ImplicitMetaPolicyUtil.implicitConfigPolicy("Readers", ImplicitMetaPolicy.Rule.ANY,
+				"Admins");
+
+		ConfigValue consortiumValue = ConfigValue.newBuilder().setValue(newConsortium(consortiumName).toByteString())
+				.build();
+		ConfigGroup.Builder applicationConfigGroupBuild = ConfigGroup.newBuilder().setVersion(1).setModPolicy("Admins")
+				.putPolicies("Admins", adminsPolicy).putPolicies("Writers", writersPolicy)
+				.putPolicies("Readers", readersPolicy);
+		for (String orgName : orgNames) {
 			applicationConfigGroupBuild.putGroups(orgName, ConfigGroup.getDefaultInstance());
 		}
 		ConfigGroup applicationConfigGroup = applicationConfigGroupBuild.build();
@@ -120,7 +101,21 @@ public class CreateChannelRequest {
 				.putValues("Consortium", consortiumValue).build();
 		return writeset;
 	}
-	
+
+	public ConfigGroup newDefaultReadSet(String consortiumName, String[] orgNames) {
+
+		ConfigValue consortiumValue = ConfigValue.newBuilder().setValue(newConsortium(consortiumName).toByteString())
+				.build();
+		ConfigGroup.Builder applicationConfigGroupBuild = ConfigGroup.newBuilder();
+		for (String orgName : orgNames) {
+			applicationConfigGroupBuild.putGroups(orgName, ConfigGroup.getDefaultInstance());
+		}
+		ConfigGroup applicationConfigGroup = applicationConfigGroupBuild.build();
+		ConfigGroup writeset = ConfigGroup.newBuilder().putGroups("Application", applicationConfigGroup)
+				.putValues("Consortium", consortiumValue).build();
+		return writeset;
+	}
+
 	public String createTxID(byte[] nonce, byte[] creator) {
 		ByteString nonceByteStr = ByteString.copyFrom(nonce);
 		ByteString createorByteStr = ByteString.copyFrom(creator);
@@ -128,9 +123,8 @@ public class CreateChannelRequest {
 		// hex:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 		return HexUtil.hexString(SHA256.hash(message.toByteArray()));
 	}
-	
-	
-	public Consortium newConsortium(String name){
+
+	public Consortium newConsortium(String name) {
 		return Consortium.newBuilder().setName(name).build();
 	}
 }

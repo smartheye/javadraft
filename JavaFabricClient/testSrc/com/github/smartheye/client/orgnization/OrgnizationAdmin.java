@@ -5,60 +5,32 @@ import java.util.Set;
 import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.User;
 
-public class OrgnizationAdmin implements User{
+public class OrgnizationAdmin implements User {
 
 	private String name;
-	
+
+	private Set<String> roles;
+
+	private String account;
+
+	private Enrollment enrollment;
+
 	private String mspId;
-	
-    private String affiliation;
-    
-	public void setAffiliation(String affiliation) {
-		this.affiliation = affiliation;
-	}
-
-	private String privateKey;
-	
-	private String cert;
-	
-	private boolean isPeerOrg;
-	
-	private boolean isOrdererOrg;
-
-	public String getPrivateKey() {
-		return privateKey;
-	}
-
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-
-	public String getCert() {
-		return cert;
-	}
-
-	public void setCert(String cert) {
-		this.cert = cert;
-	}
-
-	public boolean isPeerOrg() {
-		return isPeerOrg;
-	}
-
-	public void setPeerOrg(boolean isPeerOrg) {
-		this.isPeerOrg = isPeerOrg;
-	}
-
-	public boolean isOrdererOrg() {
-		return isOrdererOrg;
-	}
-
-	public void setOrdererOrg(boolean isOrdererOrg) {
-		this.isOrdererOrg = isOrdererOrg;
-	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public void setEnrollment(Enrollment enrollment) {
+		this.enrollment = enrollment;
 	}
 
 	public void setMspId(String mspId) {
@@ -67,38 +39,38 @@ public class OrgnizationAdmin implements User{
 
 	@Override
 	public String getName() {
+		// TODO Auto-generated method stub
 		return name;
 	}
 
 	@Override
 	public Set<String> getRoles() {
 		// TODO Auto-generated method stub
-		return null;
+		return roles;
 	}
 
 	@Override
 	public String getAccount() {
 		// TODO Auto-generated method stub
-		return null;
+		return account;
 	}
 
 	@Override
 	public String getAffiliation() {
 		// TODO Auto-generated method stub
-		return null;
+		return mspId;
 	}
 
 	@Override
 	public Enrollment getEnrollment() {
 		// TODO Auto-generated method stub
-		return null;
+		return enrollment;
 	}
 
 	@Override
 	public String getMspId() {
 		// TODO Auto-generated method stub
-		return null;
+		return mspId;
 	}
-	
-	
+
 }
